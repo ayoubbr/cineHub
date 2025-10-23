@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-war" name="cinehub">
-    <output-path>$PROJECT_DIR$/out/artifacts/cinehub</output-path>
-    <root id="root" />
-  </artifact>
-</component>

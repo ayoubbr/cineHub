@@ -19,6 +19,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     // Map the DispatcherServlet to the root path
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/api/*"}; // All API calls start with /api
+        return new String[]{"/"}; // All API calls start with /api
     }
 }

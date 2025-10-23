@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/greeting")
+@RequestMapping("/")
 public class GreetingController {
 
     private final GreetingService service;
@@ -19,7 +19,7 @@ public class GreetingController {
         this.service = service;
     }
 
-    @GetMapping("/hello")
+    @GetMapping("/")
     public ResponseEntity<Greeting> sayHello() {
         Greeting greeting = service.getHelloWorld();
         return ResponseEntity.ok(greeting);
