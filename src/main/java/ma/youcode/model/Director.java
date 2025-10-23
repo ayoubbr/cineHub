@@ -17,7 +17,6 @@ public class Director {
     @OneToMany(mappedBy = "director", cascade = CascadeType.ALL)
     private List<Film> films;
 
-    // getters/setters
     public Long getIdDirector() {
         return idDirector;
     }

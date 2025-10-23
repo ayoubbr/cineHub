@@ -10,10 +10,8 @@ public class Category {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private List<Film> films;
-
-    // getters/setters
 
     public Long getIdCategory() {
         return idCategory;

@@ -35,8 +35,6 @@ public class Film {
         }
     }
 
-    // getters/setters
-
     public Long getIdFilm() {
         return idFilm;
     }
