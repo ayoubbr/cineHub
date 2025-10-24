@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,8 +27,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Category category) {
-        categoryRepository.save(category);
-        return category;
+        Optional<Category> existingCategory = categoryRepository.findById(category.getIdCategory());
+        if (existingCategory.isPresent()) {
+            Category updatedCategory = existingCategory.get();
+            updatedCategory.setName(category.getName());
+            updatedCategory.setDescription(category.getDescription());
+            categoryRepository.save(updatedCategory);
+            return updatedCategory;
+        }
+        return null;
     }
 
     @Override
