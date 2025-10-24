@@ -10,7 +10,9 @@ import ma.youcode.repository.FilmRepository;
 import ma.youcode.service.FilmService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -39,14 +41,18 @@ public class FilmServiceImpl implements FilmService {
     }
 
     public Film update(Long id, Film film) {
-        Film existing = findById(id);
-        existing.setTitle(film.getTitle());
-        existing.setDuration(film.getDuration());
-        existing.setReleaseYear(film.getReleaseYear());
-        existing.setRating(film.getRating());
-        existing.setSynopsis(film.getSynopsis());
-        existing.validateBusinessRules();
-        return filmRepo.save(existing);
+        Optional<Film> existing = filmRepo.findById(id);
+        if (existing.isPresent()) {
+            Film f = existing.get();
+            f.setTitle(film.getTitle());
+            f.setDuration(film.getDuration());
+            f.setReleaseYear(film.getReleaseYear());
+            f.setRating(film.getRating());
+            f.setSynopsis(film.getSynopsis());
+            f.validateBusinessRules();
+            return filmRepo.save(f);
+        }
+        return null;
     }
 
     public void delete(Long id) {
@@ -58,6 +64,12 @@ public class FilmServiceImpl implements FilmService {
         return filmRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Film not found"));
     }
+
+    @Override
+    public List<Film> findAll() {
+        return filmRepo.findAll();
+    }
+
 
     public List<Film> search(String title, Integer year, String category) {
         if (title != null) return filmRepo.findByTitleContainingIgnoreCase(title);

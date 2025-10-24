@@ -9,5 +9,6 @@ public interface FilmService {
     Film update(Long id, Film film);
     void delete(Long id);
     Film findById(Long id);
+    List<Film> findAll();
     List<Film> search(String title, Integer year, String category);
 }

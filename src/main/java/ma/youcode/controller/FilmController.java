@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/films")
@@ -54,17 +55,43 @@ public class FilmController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Film>> list(
+    public ResponseEntity<List<FilmResponseDTO>> list() {
+        List<Film> films = filmService.findAll();
+        List<FilmResponseDTO> responseDTOs = films.stream()
+                .map(filmMapper::toResponseDTO)
+                .toList();
+
+        return ResponseEntity.ok(responseDTOs);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FilmResponseDTO>> list(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Integer year,
             @RequestParam(required = false) String category) {
-        return ResponseEntity.ok(filmService.search(title, year, category));
+        List<Film> films = filmService.search(title, year, category);
+        List<FilmResponseDTO> responseDTOs = films.stream()
+                .map(filmMapper::toResponseDTO)
+                .toList();
+
+        return ResponseEntity.ok(responseDTOs);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Film> update(@PathVariable Long id, @RequestBody Film film) {
-        Film updatedFilm = filmService.update(id, film);
-        return ResponseEntity.ok(updatedFilm);
+    public ResponseEntity<FilmResponseDTO> update(@PathVariable Long id, @RequestBody FilmRequestDTO filmDto) {
+        Director director = directorService.findById(filmDto.getDirector().getIdDirector());
+        Category category = categoryService.findById(filmDto.getCategory().getIdCategory());
+
+        // 2. Map DTO to Entity
+        Film filmToUpdate = filmMapper.toEntity(filmDto, director, category);
+
+        // 3. Save the entity
+        Film updatedFilm = filmService.update(id, filmToUpdate);
+
+        // 4. Map the saved Entity back to a Response DTO
+        FilmResponseDTO response = filmMapper.toResponseDTO(updatedFilm);
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
