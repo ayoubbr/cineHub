@@ -1,42 +1,18 @@
-package ma.youcode.model;
+package ma.youcode.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-
-import java.time.Year;
-
-@Entity
-public class Film {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FilmResponseDTO {
     private Long idFilm;
-
     private String title;
-
     private Integer releaseYear;
-
     private Integer duration;
-
     private String synopsis;
-
     private Double rating;
 
-    @JoinColumn(name = "director_id")
-    @ManyToOne(optional = false)
-    private Director director;
+    // Simplified, non-circular representations
+    private DirectorResponseDTO director;
+    private CategoryResponseDTO category;
 
-    @JoinColumn(name = "category_id")
-    @ManyToOne(optional = false)
-    private Category category;
 
-    public void validateBusinessRules() {
-        if (releaseYear != null && releaseYear > Year.now().getValue()) {
-            throw new IllegalArgumentException("Release year cannot be in the future");
-        }
-        if (rating < 0 || rating > 10) {
-            throw new IllegalArgumentException("Rating must be between 0 and 10");
-        }
-    }
 
     public Long getIdFilm() {
         return idFilm;
@@ -86,19 +62,19 @@ public class Film {
         this.rating = rating;
     }
 
-    public Director getDirector() {
+    public DirectorResponseDTO getDirector() {
         return director;
     }
 
-    public void setDirector(Director director) {
+    public void setDirector(DirectorResponseDTO director) {
         this.director = director;
     }
 
-    public Category getCategory() {
+    public CategoryResponseDTO getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CategoryResponseDTO category) {
         this.category = category;
     }
 }

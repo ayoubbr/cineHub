@@ -1,22 +1,14 @@
-package ma.youcode.model;
+package ma.youcode.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
-@Entity
-public class Director {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DirectorResponseDTO {
     private Long idDirector;
     private String firstName;
     private String lastName;
     private String nationality;
     private LocalDate birthDate;
     private String biography;
-
-    @OneToMany(mappedBy = "director", cascade = CascadeType.ALL)
-    private List<Film> films;
 
     public Long getIdDirector() {
         return idDirector;
@@ -64,13 +56,5 @@ public class Director {
 
     public void setBiography(String biography) {
         this.biography = biography;
-    }
-
-    public List<Film> getFilms() {
-        return films;
-    }
-
-    public void setFilms(List<Film> films) {
-        this.films = films;
     }
 }

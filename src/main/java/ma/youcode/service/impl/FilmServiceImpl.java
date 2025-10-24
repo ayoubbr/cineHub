@@ -20,7 +20,8 @@ public class FilmServiceImpl implements FilmService {
     private final DirectorRepository directorRepo;
     private final CategoryRepository categoryRepo;
 
-    public FilmServiceImpl(FilmRepository filmRepo, DirectorRepository directorRepo, CategoryRepository categoryRepo) {
+    public FilmServiceImpl(FilmRepository filmRepo,
+                           DirectorRepository directorRepo, CategoryRepository categoryRepo) {
         this.filmRepo = filmRepo;
         this.directorRepo = directorRepo;
         this.categoryRepo = categoryRepo;

@@ -1,18 +1,9 @@
-package ma.youcode.model;
+package ma.youcode.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import java.util.List;
-
-@Entity
-public class Category {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CategoryResponseDTO {
     private Long idCategory;
     private String name;
     private String description;
-
-    @OneToMany(mappedBy = "category")
-    private List<Film> films;
 
     public Long getIdCategory() {
         return idCategory;
@@ -38,11 +29,5 @@ public class Category {
         this.description = description;
     }
 
-    public List<Film> getFilms() {
-        return films;
-    }
 
-    public void setFilms(List<Film> films) {
-        this.films = films;
-    }
 }
